@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="/css/print-docs.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Preview Toolbar -->
+  <div class="no-print-bar">
+    <div>
+      <span class="fw-bold"><i class="fa-solid fa-calendar-check"></i> OPD Appointment Slip Preview</span>
+      <small class="text-muted ms-2">A4 Optimized Layout</small>
+    </div>
+    <div>
+      <button class="btn btn-outline-secondary btn-sm me-2" onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <button class="btn btn-primary btn-sm" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Document</button>
+    </div>
+  </div>
+
+  <div class="document-preview-container">
+    <div class="a4-document">
+      <div class="hospital-watermark"><%= hospitalName %></div>
+      <div class="doc-content">
+        
+        <!-- Header -->
+        <div class="doc-header d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <i class="fa-solid fa-circle-h hospital-logo-icon"></i>
+            </div>
+            <div>
+              <h1 class="hospital-title text-hospital-primary"><%= hospitalName %></h1>
+              <p class="hospital-subtitle"><i class="fa-solid fa-location-dot"></i> Sector 62, Noida, Uttar Pradesh - 201301</p>
+              <p class="hospital-subtitle"><i class="fa-solid fa-phone"></i> +91 95089 70151 | <i class="fa-solid fa-envelope"></i> contact@carepoint.local</p>
+              <p class="hospital-subtitle"><i class="fa-solid fa-globe"></i> www.carepointhospital.local</p>
+            </div>
+          </div>
+          <div class="text-end">
+            <span class="doc-type-title">OPD Appointment Slip</span>
+            <div class="barcode-container">
+              <div class="barcode-bars"></div>
+              <div class="barcode-text"><%= appointment.appointmentNo %></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appointment Main Token & Room -->
+        <div class="row mb-4">
+          <div class="col-4">
+            <div class="card border text-center p-3" style="border-radius: 10px;">
+              <span class="text-muted small fw-bold text-uppercase">Token Number</span>
+              <h1 class="text-hospital-primary fw-bold mb-0 mt-1" style="font-size: 3rem;">
+                <%= Math.floor(Math.random() * 40) + 1 %>
+              </h1>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card border text-center p-3" style="border-radius: 10px;">
+              <span class="text-muted small fw-bold text-uppercase">OPD Room Number</span>
+              <h1 class="text-hospital-secondary fw-bold mb-0 mt-1" style="font-size: 3rem;">
+                Room <%= Math.floor(Math.random() * 10) + 201 %>
+              </h1>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card border text-center p-3" style="border-radius: 10px;">
+              <span class="text-muted small fw-bold text-uppercase">Visit Type</span>
+              <h3 class="text-dark fw-bold mb-0 mt-3">
+                First Consultation
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meta Info -->
+        <div class="row">
+          <div class="col-6">
+            <div class="meta-box">
+              <div class="meta-title">Patient Information</div>
+              <div class="meta-grid">
+                <div class="meta-item"><span class="meta-label">Patient Name:</span><span class="meta-value"><%= appointment.patient?.name %></span></div>
+                <div class="meta-item"><span class="meta-label">Patient ID (UHID):</span><span class="meta-value"><%= appointment.patient?.patientId || '-' %></span></div>
+                <div class="meta-item"><span class="meta-label">Age / Gender:</span><span class="meta-value"><%= appointment.patient ? (appointment.patient.age || 'N/A') + ' yrs / ' + (appointment.patient.gender || 'N/A') : '-' %></span></div>
+                <div class="meta-item"><span class="meta-label">Mobile Number:</span><span class="meta-value"><%= appointment.patient?.mobile || '-' %></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="meta-box">
+              <div class="meta-title">Doctor & Schedule Information</div>
+              <div class="meta-grid">
+                <div class="meta-item"><span class="meta-label">Doctor Name:</span><span class="meta-value"><%= appointment.doctor?.name %></span></div>
+                <div class="meta-item"><span class="meta-label">Department:</span><span class="meta-value"><%= appointment.department?.name || '-' %></span></div>
+                <div class="meta-item"><span class="meta-label">Appointment Date:</span><span class="meta-value"><%= new Date(appointment.date).toLocaleDateString() %></span></div>
+                <div class="meta-item"><span class="meta-label">Scheduled Time:</span><span class="meta-value"><%= appointment.time || '-' %></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appointment Instructions -->
+        <div class="card border p-4 mb-4" style="border-radius: 10px; background-color: #fbfbfb;">
+          <h5 class="text-hospital-primary fw-bold mb-3"><i class="fa-solid fa-circle-info"></i> Instructions for Patients</h5>
+          <ul class="mb-0 fs-7" style="padding-left: 20px; font-size: 0.85rem; line-height: 1.6;">
+            <li>Please reach the assigned OPD room 15 minutes prior to your scheduled slot.</li>
+            <li>In case of cancellation or reschedule, please inform the reception desk at least 2 hours prior.</li>
+            <li>Always carry your physical UHID card and previous consultation history.</li>
+            <li>Consultation slip remains valid only for the date of issue.</li>
+            <li>Kindly wear a face mask inside the critical care/cardiology wings.</li>
+          </ul>
+        </div>
+
+        <!-- QR Code and Footer -->
+        <div class="row align-items-center mt-5">
+          <div class="col-8">
+            <div class="d-flex align-items-center">
+              <div class="qr-container me-3">
+                <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=<%= encodeURIComponent('UHID: ' + (appointment.patient?.patientId || '') + ', ApptNo: ' + appointment.appointmentNo + ', Date: ' + new Date(appointment.date).toLocaleDateString()) %>" alt="QR Code" width="90" height="90">
+              </div>
+              <div style="font-size: 0.75rem; color: #6c757d;">
+                <p class="mb-1 fw-bold text-dark">Scan to Verify Appointment Status</p>
+                <p class="mb-0">This OPD card has been prepared digitally by CarePoint HMIS. Prepared By: Reception Counter Desk A.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 text-end">
+            <div class="signature-box d-inline-block">
+              <div class="signature-line">OPD Desk Officer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer System -->
+        <div class="print-system-footer mt-5">
+          <span>Printed: <%= new Date().toLocaleString() %></span>
+          <span>CarePoint Hospital OPD Services</span>
+          <span>Page 1 of 1</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

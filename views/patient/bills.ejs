@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<section class="panel">
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead><tr><th>Bill No</th><th>Total</th><th>Paid</th><th>Due</th><th>Status</th><th class="text-end">Invoice</th></tr></thead>
+      <tbody>
+        <% bills.forEach(bill => { %>
+          <tr>
+            <td><%= bill.billNo %></td>
+            <td>Rs. <%= bill.total %></td>
+            <td>Rs. <%= bill.paidAmount %></td>
+            <td>Rs. <%= bill.dueAmount %></td>
+            <td><span class="badge text-bg-primary"><%= bill.status %></span></td>
+            <td class="text-end"><a class="btn btn-sm btn-outline-success" href="/billing/<%= bill._id %>/invoice"><i class="fa-solid fa-file-pdf"></i></a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% if (!bills.length) { %><p class="empty-line">No bills found.</p><% } %>
+</section>
+<%- include('../partials/footer') %>

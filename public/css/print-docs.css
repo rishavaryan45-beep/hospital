@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  background-color: #F5F7FA;
+  font-family: 'Poppins', sans-serif;
+  color: #2b303a;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.no-print-bar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dee2e6;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.document-preview-container {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.a4-document {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm 15mm;
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Watermark */
+.hospital-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-size: 7.5rem;
+  font-weight: 700;
+  color: rgba(13, 110, 253, 0.025);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.doc-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Colors & Brand */
+.text-hospital-primary {
+  color: #0D6EFD;
+}
+.text-hospital-secondary {
+  color: #198754;
+}
+.bg-hospital-light {
+  background-color: #F8F9FA;
+}
+
+/* Document Header */
+.doc-header {
+  border-bottom: 2px solid #0D6EFD;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+.hospital-logo-icon {
+  font-size: 3rem;
+  color: #0D6EFD;
+}
+.hospital-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+.hospital-subtitle {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+/* Metadata grid */
+.meta-box {
+  background-color: #F8F9FA;
+  border-radius: 10px;
+  border-left: 4px solid #0D6EFD;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+}
+.meta-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 1px dashed #dee2e6;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 8px;
+  column-gap: 20px;
+  font-size: 0.85rem;
+}
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+}
+.meta-label {
+  font-weight: 500;
+  color: #6c757d;
+}
+.meta-value {
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Document Title */
+.doc-type-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #212529;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 5px 15px;
+  display: inline-block;
+  background-color: #F8F9FA;
+  margin-bottom: 20px;
+}
+
+/* Custom Table */
+.hospital-table {
+  font-size: 0.85rem;
+  margin-bottom: 25px;
+}
+.hospital-table thead th {
+  background-color: #0D6EFD !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 10px 12px;
+}
+.hospital-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e9ecef;
+}
+.hospital-table tbody tr:nth-of-type(even) {
+  background-color: rgba(13, 110, 253, 0.015);
+}
+
+/* Summary Box */
+.summary-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+.summary-box {
+  width: 300px;
+  font-size: 0.85rem;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+.summary-row.total-row {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0D6EFD;
+  border-top: 1px solid #0D6EFD;
+  border-bottom: 2px solid #0D6EFD;
+  padding: 10px 0;
+  margin-top: 5px;
+}
+
+/* Signatures & Seal */
+.doc-verification {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 50px;
+  font-size: 0.85rem;
+}
+.signature-box {
+  text-align: center;
+  width: 180px;
+}
+.signature-line {
+  border-top: 1px solid #adb5bd;
+  margin-top: 45px;
+  padding-top: 5px;
+  color: #495057;
+  font-weight: 500;
+}
+.hospital-seal-box {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ced4da;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #adb5bd;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 0 auto;
+}
+
+/* Code watermarks & print dates */
+.print-system-footer {
+  border-top: 1px solid #dee2e6;
+  padding-top: 8px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #868e96;
+}
+
+/* Rx prescription styling */
+.rx-symbol {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: Georgia, serif;
+  color: #0D6EFD;
+  margin-bottom: 10px;
+}
+
+/* Barcode */
+.barcode-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.barcode-bars {
+  height: 35px;
+  width: 140px;
+  background: repeating-linear-gradient(
+    90deg,
+    #000,
+    #000 1px,
+    #fff 1px,
+    #fff 3px,
+    #000 3px,
+    #000 4px,
+    #fff 4px,
+    #fff 6px,
+    #000 6px,
+    #000 8px,
+    #fff 8px,
+    #fff 9px
+  );
+}
+.barcode-text {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: #495057;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+/* QR code sizing */
+.qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.qr-image {
+  border: 1px solid #e9ecef;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+@media print {
+  body {
+    background-color: #ffffff !important;
+  }
+  .no-print-bar {
+    display: none !important;
+  }
+  .document-preview-container {
+    padding: 0 !important;
+  }
+  .a4-document {
+    width: 100% !important;
+    min-height: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .hospital-table thead th {
+    background-color: #0D6EFD !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  /* Avoid page break inside elements */
+  tr, .meta-box, .doc-verification, .barcode-container {
+    page-break-inside: avoid !important;
+  }
+}

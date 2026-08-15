@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<form class="panel form-grid needs-validation" method="post" action="/doctor/schedule" novalidate>
+  <div class="span-2">
+    <label class="form-label">Availability Time</label>
+    <input class="form-control" name="availability" value="<%= doctor?.availability || '' %>" placeholder="10:00 AM - 4:00 PM">
+  </div>
+  <div class="span-2">
+    <label class="form-label">Schedule Days</label>
+    <div class="check-grid" data-max-checks="3">
+      <% days.forEach(day => { %>
+        <label><input type="checkbox" name="scheduleDays" value="<%= day %>" <%= (doctor?.scheduleDays || []).includes(day) ? 'checked' : '' %>> <%= day %></label>
+      <% }) %>
+    </div>
+    <small class="text-muted">Choose exactly three days. Patients can book you only on these days.</small>
+  </div>
+  <div class="span-2 form-actions">
+    <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Schedule</button>
+  </div>
+</form>
+<%- include('../partials/footer') %>

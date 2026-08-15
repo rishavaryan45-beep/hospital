@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<form class="panel form-grid needs-validation" method="post" enctype="multipart/form-data" action="/patient/profile" novalidate>
+  <div><label class="form-label">Name</label><input class="form-control" name="name" value="<%= patient?.name || '' %>" required></div>
+  <div><label class="form-label">Father Name</label><input class="form-control" name="fatherName" value="<%= patient?.fatherName || '' %>"></div>
+  <div><label class="form-label">DOB</label><input class="form-control" type="date" name="dob" value="<%= patient?.dob ? new Date(patient.dob).toISOString().slice(0, 10) : '' %>"></div>
+  <div><label class="form-label">Age</label><input class="form-control" type="number" name="age" value="<%= patient?.age || '' %>"></div>
+  <div><label class="form-label">Blood Group</label><input class="form-control" name="bloodGroup" value="<%= patient?.bloodGroup || '' %>"></div>
+  <div><label class="form-label">Mobile</label><input class="form-control" name="mobile" value="<%= patient?.mobile || '' %>" required></div>
+  <div><label class="form-label">Email</label><input class="form-control" type="email" name="email" value="<%= patient?.email || '' %>"></div>
+  <div><label class="form-label">Aadhaar Number</label><input class="form-control" name="aadhaarNumber" value="<%= patient?.aadhaarNumber || '' %>"></div>
+  <div><label class="form-label">Emergency Contact</label><input class="form-control" name="emergencyContact" value="<%= patient?.emergencyContact || '' %>"></div>
+  <div><label class="form-label">Photo</label><input class="form-control" type="file" name="photo"></div>
+  <div class="span-2"><label class="form-label">Address</label><textarea class="form-control" name="address" rows="3"><%= patient?.address || '' %></textarea></div>
+  <div class="span-2 form-actions">
+    <a class="btn btn-outline-secondary" href="/patient">Cancel</a>
+    <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+  </div>
+</form>
+<%- include('../partials/footer') %>

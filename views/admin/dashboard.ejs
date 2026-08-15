@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+<section class="stats-grid">
+  <article><i class="fa-solid fa-user-doctor"></i><span>Total Doctors</span><strong><%= cards.doctors %></strong></article>
+  <article><i class="fa-solid fa-hospital-user"></i><span>Total Patients</span><strong><%= cards.patients %></strong></article>
+  <article><i class="fa-solid fa-calendar-day"></i><span>Today's Appointments</span><strong><%= cards.todaysAppointments %></strong></article>
+  <article><i class="fa-solid fa-bed"></i><span>Admitted Patients</span><strong><%= cards.admitted %></strong></article>
+  <article><i class="fa-solid fa-door-open"></i><span>Available Rooms</span><strong><%= cards.availableRooms %></strong></article>
+  <article><i class="fa-solid fa-indian-rupee-sign"></i><span>Revenue</span><strong><%= cards.revenue %></strong></article>
+</section>
+<section class="dashboard-grid">
+  <!-- <div class="panel"><h2>Monthly Patients</h2><canvas id="patientsChart"></canvas></div>
+  <div class="panel"><h2>Revenue</h2><canvas id="revenueChart"></canvas></div>
+  <div class="panel"><h2>Department Wise Patients</h2><canvas id="departmentChart"></canvas></div> -->
+  <div class="panel">
+    <h2>Notifications</h2>
+    <ul class="notice-list">
+      <% lowStock.forEach(med => { %><li><i class="fa-solid fa-pills"></i> Low stock: <%= med.name %> (<%= med.quantity %>)</li><% }) %>
+      <% pendingBills.forEach(bill => { %><li><i class="fa-solid fa-file-invoice"></i> Pending bill: <%= bill.patient?.name %> - Rs. <%= bill.dueAmount %></li><% }) %>
+      <% if (!lowStock.length && !pendingBills.length) { %><li><i class="fa-solid fa-circle-check"></i> No urgent alerts</li><% } %>
+    </ul>
+  </div>
+</section>
+<%- include('../partials/footer') %>

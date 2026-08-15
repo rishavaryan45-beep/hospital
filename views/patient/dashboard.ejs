@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<section class="profile-band">
+  <div>
+    <h2><%= patient?.name || currentUser.name %></h2>
+    <p><%= patient?.patientId || '' %> <%= patient?.bloodGroup ? ' | ' + patient.bloodGroup : '' %></p>
+  </div>
+  <div class="d-flex align-items-center gap-2"><span class="badge text-bg-primary"><%= patient?.status || 'Patient' %></span><a class="btn btn-sm btn-outline-primary" href="/patient/profile/edit"><i class="fa-solid fa-pen"></i></a></div>
+</section>
+<section class="dashboard-grid">
+  <div class="panel span-wide">
+    <h2>Appointments</h2>
+    <table class="table align-middle"><thead><tr><th>Date</th><th>Doctor</th><th>Department</th><th>Status</th></tr></thead><tbody>
+      <% appointments.forEach(item => { %><tr><td><%= new Date(item.date).toLocaleDateString() %></td><td><%= item.doctor?.name %></td><td><%= item.department?.name %></td><td><%= item.status %></td></tr><% }) %>
+    </tbody></table>
+  </div>
+  <div class="panel">
+    <h2>Prescriptions</h2>
+    <ul class="notice-list"><% prescriptions.forEach(rx => { %><li><i class="fa-solid fa-prescription"></i> <%= rx.diagnosis || 'Prescription' %> - <%= rx.doctor?.name %></li><% }) %></ul>
+  </div>
+  <div class="panel">
+    <h2>Medical Reports</h2>
+    <ul class="notice-list"><% reports.forEach(report => { %><li><i class="fa-solid fa-file-medical"></i> <a href="<%= report.filePath %>" target="_blank"><%= report.title %></a></li><% }) %></ul>
+  </div>
+  <div class="panel">
+    <h2>Bills</h2>
+    <ul class="notice-list"><% bills.forEach(bill => { %><li><i class="fa-solid fa-file-pdf"></i> <a href="/billing/<%= bill._id %>/invoice"><%= bill.billNo %></a> - Rs. <%= bill.dueAmount %> due</li><% }) %></ul>
+  </div>
+</section>
+<%- include('../partials/footer') %>

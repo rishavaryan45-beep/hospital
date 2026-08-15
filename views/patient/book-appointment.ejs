@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<form class="panel form-grid needs-validation" method="post" action="/patient/appointments" novalidate>
+  <div class="span-2">
+    <label class="form-label">Department</label>
+    <select class="form-select" name="department" required>
+      <option value="">Select Department</option>
+      <% departments.forEach(department => { %>
+        <option value="<%= department._id %>"><%= department.name %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div>
+    <label class="form-label">Date</label>
+    <input class="form-control" type="date" name="date" required>
+  </div>
+  <div>
+    <label class="form-label">Time</label>
+    <input class="form-control" type="time" name="time" required>
+  </div>
+  <div class="span-2">
+    <label class="form-label">Notes</label>
+    <textarea class="form-control" name="notes" rows="3" placeholder="Reason for visit"></textarea>
+  </div>
+  <div class="span-2 form-actions">
+    <a class="btn btn-outline-secondary" href="/patient/appointments">Cancel</a>
+    <button class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book Appointment</button>
+  </div>
+</form>
+<%- include('../partials/footer') %>

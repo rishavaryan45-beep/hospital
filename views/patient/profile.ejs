@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<section class="profile-band">
+  <% if (patient?.photo) { %>
+    <img class="profile-photo" src="<%= patient.photo %>" alt="Patient photo">
+  <% } else { %>
+    <div class="profile-photo placeholder"><i class="fa-solid fa-hospital-user"></i></div>
+  <% } %>
+  <div>
+    <h2><%= patient?.name || currentUser.name %></h2>
+    <p><%= patient?.patientId || '' %> <%= patient?.status ? ' | ' + patient.status : '' %></p>
+  </div>
+  <a class="btn btn-outline-primary btn-sm" href="/patient/profile/edit"><i class="fa-solid fa-pen"></i> Edit</a>
+</section>
+<section class="panel">
+  <div class="details-grid">
+    <p><strong>Father Name</strong><span><%= patient?.fatherName || '-' %></span></p>
+    <p><strong>Gender</strong><span><%= patient?.gender || '-' %></span></p>
+    <p><strong>Age</strong><span><%= patient?.age || '-' %></span></p>
+    <p><strong>Blood Group</strong><span><%= patient?.bloodGroup || '-' %></span></p>
+    <p><strong>Mobile</strong><span><%= patient?.mobile || '-' %></span></p>
+    <p><strong>Email</strong><span><%= patient?.email || '-' %></span></p>
+    <p><strong>Department</strong><span><%= patient?.department?.name || '-' %></span></p>
+    <p><strong>Doctor</strong><span><%= patient?.assignedDoctor?.name || '-' %></span></p>
+    <p class="span-2"><strong>Address</strong><span><%= patient?.address || '-' %></span></p>
+  </div>
+</section>
+<%- include('../partials/footer') %>

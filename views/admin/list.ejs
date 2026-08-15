@@ -1,0 +1,65 @@
+<%- include('../partials/header') %>
+<section class="panel">
+  <div class="panel-head">
+    <form class="search-form" method="get">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search" name="q" value="<%= search %>" placeholder="Search">
+    </form>
+    <a class="btn btn-primary" href="<%= basePath %>/<%= resource %>/new"><i class="fa-solid fa-plus"></i> Add <%= config.singular %></a>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-middle data-table">
+      <thead>
+        <tr>
+          <% config.listFields.forEach(field => { %><th><%= field.split('.').pop() %></th><% }) %>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items.forEach(item => { %>
+          <tr>
+            <% config.listFields.forEach(field => { %>
+              <% const value = getNested(item, field); %>
+              <td>
+                <% if (field.toLowerCase().includes('photo') && value) { %>
+                  <img class="table-avatar" src="<%= value %>" alt="Profile photo">
+                <% } else { %>
+                  <%= formatValue(value) %>
+                <% } %>
+              </td>
+            <% }) %>
+            <td class="text-end">
+              <% if (resource === 'bills') { %>
+                <a class="btn btn-sm btn-outline-success" href="/billing/<%= item._id %>/invoice" title="Print Invoice"><i class="fa-solid fa-print"></i></a>
+              <% } %>
+              <% if (resource === 'appointments') { %>
+                <a class="btn btn-sm btn-outline-success" href="/billing/appointments/<%= item._id %>/print" title="Print Slip"><i class="fa-solid fa-print"></i></a>
+              <% } %>
+              <% if (resource === 'prescriptions') { %>
+                <a class="btn btn-sm btn-outline-success" href="/billing/prescriptions/<%= item._id %>/print" title="Print Prescription"><i class="fa-solid fa-print"></i></a>
+              <% } %>
+              <% if (resource === 'reports') { %>
+                <a class="btn btn-sm btn-outline-success" href="/billing/reports/<%= item._id %>/print" title="Print Diagnostic Report"><i class="fa-solid fa-print"></i></a>
+              <% } %>
+              <% if (resource === 'admissions') { %>
+                <a class="btn btn-sm btn-outline-success" href="/billing/admissions/<%= item._id %>/print" title="Print Discharge Summary"><i class="fa-solid fa-print"></i></a>
+              <% } %>
+              <a class="btn btn-sm btn-outline-primary" href="<%= basePath %>/<%= resource %>/<%= item._id %>/edit" title="Edit"><i class="fa-solid fa-pen"></i></a>
+              <% if (currentUser.role !== 'doctor') { %>
+                <form class="d-inline delete-form" method="post" action="<%= basePath %>/<%= resource %>/<%= item._id %>?_method=DELETE">
+                  <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <div class="pager">
+    <% for (let i = 1; i <= pages; i++) { %>
+      <a class="btn btn-sm <%= i === page ? 'btn-primary' : 'btn-outline-primary' %>" href="?page=<%= i %>&q=<%= search %>"><%= i %></a>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/footer') %>

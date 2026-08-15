@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<section class="panel">
+  <% prescriptions.forEach(rx => { %>
+    <article class="record-card">
+      <div class="panel-head">
+        <h2><%= rx.diagnosis || 'Prescription' %></h2>
+        <div>
+          <span class="me-2"><%= new Date(rx.createdAt).toLocaleDateString() %></span>
+          <a class="btn btn-sm btn-outline-success" href="/billing/prescriptions/<%= rx._id %>/print" target="_blank"><i class="fa-solid fa-print"></i> Print</a>
+        </div>
+      </div>
+      <p><strong>Doctor:</strong> <%= rx.doctor?.name || '-' %></p>
+      <p><strong>Notes:</strong> <%= rx.notes || '-' %></p>
+      <table class="table table-sm align-middle">
+        <thead><tr><th>Medicine</th><th>Dosage</th><th>Schedule</th><th>Days</th><th>Instructions</th></tr></thead>
+        <tbody>
+          <% (rx.medicines || []).forEach(med => { %>
+            <tr>
+              <td><%= med.name || '-' %></td>
+              <td><%= med.dosage || '-' %></td>
+              <td><%= [med.morning && 'Morning', med.afternoon && 'Afternoon', med.night && 'Night'].filter(Boolean).join(', ') || '-' %></td>
+              <td><%= med.days || '-' %></td>
+              <td><%= med.instructions || '-' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </article>
+  <% }) %>
+  <% if (!prescriptions.length) { %><p class="empty-line">No prescriptions found.</p><% } %>
+</section>
+<%- include('../partials/footer') %>

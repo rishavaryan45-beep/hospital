@@ -1,0 +1,136 @@
+<%- include('../partials/header') %>
+<section class="shop-grid">
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Available Medicines</h2>
+      <a class="btn btn-outline-primary btn-sm" href="<%= currentUser.role === 'admin' ? '/admin/medicines' : currentUser.role === 'receptionist' ? '/receptionist/medicines' : '/pharmacy/medicines' %>"><i class="fa-solid fa-boxes-stacked"></i> Manage Stock</a>
+    </div>
+    <input class="form-control mb-3" type="search" placeholder="Search medicine" data-stock-search>
+    <div class="shop-stock stock-list" data-stock-list>
+      <% medicines.forEach(medicine => { %>
+        <button class="stock-chip" type="button" data-pharmacy-stock-add data-id="<%= medicine._id %>" data-name="<%= medicine.name %>" data-rate="<%= medicine.perUnitPrice || medicine.sellingPrice || 0 %>" data-piece-rate="<%= medicine.perPiecePrice || 0 %>" data-unit="<%= medicine.unitName || 'Packet' %>" data-quantity="<%= medicine.quantity || 0 %>" <%= medicine.quantity <= 0 ? 'disabled' : '' %>>
+          <strong><%= medicine.name %></strong>
+          <span><%= medicine.company || 'Medicine' %> | Batch <%= medicine.batchNumber %></span>
+          <span><%= medicine.quantity %> stock | Unit Rs. <%= Number(medicine.perUnitPrice || medicine.sellingPrice || 0).toFixed(2) %> | Piece Rs. <%= Number(medicine.perPiecePrice || 0).toFixed(2) %></span>
+        </button>
+      <% }) %>
+    </div>
+  </div>
+
+  <form class="panel needs-validation" method="post" action="/pharmacy/bills" novalidate>
+    <div class="panel-head">
+      <h2>Medicine Bill</h2>
+      <button class="btn btn-outline-primary btn-sm" type="button" data-add-pharmacy-medicine><i class="fa-solid fa-plus"></i> Add Row</button>
+    </div>
+    <input type="hidden" name="patient" id="patient-db-id">
+    <div class="form-grid-3 mb-3">
+      <div>
+        <label class="form-label">Patient ID (Optional)</label>
+        <input class="form-control" id="patient-id-input" list="patients-list" placeholder="e.g. PAT00001" autocomplete="off">
+        <datalist id="patients-list">
+          <% patients.forEach(patient => { %>
+            <option value="<%= patient.patientId %>"><%= patient.name %></option>
+          <% }) %>
+        </datalist>
+        <div id="patient-id-status" class="small text-muted mt-1"></div>
+      </div>
+      <div>
+        <label class="form-label">Customer Name</label>
+        <input class="form-control" name="customerName" id="customer-name-input" placeholder="Customer Name" required>
+      </div>
+      <div>
+        <label class="form-label">Customer Mobile</label>
+        <input class="form-control" name="customerMobile" id="customer-mobile-input" placeholder="Customer Mobile">
+      </div>
+    </div>
+    <div data-pharmacy-list></div>
+    <div class="billing-note mt-3">
+
+    <div class="mb-2">
+        <label class="form-label">Subtotal</label>
+        <input class="form-control" type="text" readonly value="0" data-bill-subtotal>
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">GST (18%)</label>
+        <input class="form-control" type="text" readonly value="0" data-bill-gst>
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Discount (10%)</label>
+        <input class="form-control" type="text" readonly value="0" data-bill-discount>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Grand Total</label>
+        <input class="form-control fw-bold"
+               type="text"
+               name="total"
+               readonly
+               value="0"
+               data-bill-total>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <label class="form-label">Paid Amount</label>
+        <input
+            class="form-control"
+            type="number"
+            min="0"
+            step="0.01"
+            name="paidAmount"
+            value="0"
+            data-bill-paid
+            required>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Return Amount</label>
+        <input
+            class="form-control"
+            type="text"
+            readonly
+            value="0"
+            data-bill-return>
+    </div>
+
+</div>
+    <div class="form-actions mt-3">
+      <button class="btn btn-primary"><i class="fa-solid fa-file-invoice-dollar"></i> Generate Bill</button>
+    </div>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Recent Medicine Bills</h2></div>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead><tr><th>Bill No</th><th>Customer</th><th>Total</th><th>Status</th><th class="text-end">Invoice</th></tr></thead>
+      <tbody>
+        <% recentBills.forEach(bill => { %>
+          <tr>
+            <td><%= bill.billNo %></td>
+            <td><%= bill.patient?.name || bill.customerName || 'Walk-in Customer' %></td>
+            <td>Rs. <%= Number(bill.total || 0).toFixed(2) %></td>
+            <td><span class="badge text-bg-primary"><%= bill.status %></span></td>
+            <td class="text-end"><a class="btn btn-sm btn-outline-success" href="/pharmacy/<%= bill._id %>/invoice"><i class="fa-solid fa-file-pdf"></i></a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<script id="patients-data" type="application/json">
+  <%- JSON.stringify(patients) %>
+</script>
+<script id="medicines-data" type="application/json">
+  <%- JSON.stringify(medicines) %>
+</script>
+<script id="prescriptions-data" type="application/json">
+  <%- JSON.stringify(prescriptions) %>
+</script>
+<%- include('../partials/footer') %>
